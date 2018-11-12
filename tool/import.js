@@ -4,7 +4,7 @@ var serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://pure-archive-217204.firebaseio.com"
+  databaseURL: ""
 });
 
 const db = admin.firestore();
@@ -40,8 +40,8 @@ return db
     });
   })
   .then(function() {
-    console.log("Success!");
+    console.log("Success!"); // eslint-disable-line no-console
   })
   .catch(function(error) {
-    console.log("Failed", error);
+    console.log("Failed", error); // eslint-disable-line no-console
   });
