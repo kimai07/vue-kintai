@@ -17,7 +17,7 @@
 
 <script>
 import { db } from "../plugins/firebase";
-import { set2num } from "../util/util.js";
+import { set2fig } from "../util/util.js";
 
 export default {
   data() {
@@ -38,12 +38,12 @@ export default {
   },
   methods: {
     setCurrentDateWithFormat() {
-      var d = this.$moment();
-      this.formattedCurrentDate.YYYY = d.format("YYYY");
-      this.formattedCurrentDate.MM = d.format("MM");
-      this.formattedCurrentDate.DD = d.format("DD");
-      this.formattedCurrentDate.HH = d.format("HH");
-      this.formattedCurrentDate.mm = d.format("mm");
+      this.date = this.$moment();
+      this.formattedCurrentDate.YYYY = this.date.format("YYYY");
+      this.formattedCurrentDate.MM = this.date.format("MM");
+      this.formattedCurrentDate.DD = this.date.format("DD");
+      this.formattedCurrentDate.HH = this.date.format("HH");
+      this.formattedCurrentDate.mm = this.date.format("mm");
     },
     getCurrentDateAtFormattedStr() {
       return (
@@ -78,7 +78,7 @@ export default {
       var duration = this.$moment.duration(b.diff(a));
       var minutes = duration.asMinutes();
       var hour = parseInt(minutes / 60, 10);
-      var minuteStr = this.set2num((minutes % 60).toString(10));
+      var minuteStr = this.set2fig((minutes % 60).toString(10));
 
       var hourStr = hour.toString(10);
       var restTime = "0";
@@ -149,7 +149,7 @@ export default {
           });
         });
     },
-    set2num
+    set2fig
   }
 };
 </script>

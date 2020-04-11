@@ -1,12 +1,12 @@
 <template>
   <div class="kintai_table">
     <!-- Table -->
-    <h2>勤務表: {{currentDate.YYYY}}年{{currentDate.MM}}月</h2>
+    <h2>勤務表: {{ currentDate.YYYY }}年{{ currentDate.MM }}月</h2>
     <div id="other_table">
       <button @click="prev">前の月</button>
-    <button @click="next">次の月</button>
+      <button @click="next">次の月</button>
     </div>
-    <table border=1 width="100%">
+    <table border="1" width="100%">
       <!-- header -->
       <thead>
         <tr>
@@ -17,14 +17,14 @@
       </thead>
       <!-- data -->
       <tbody>
-        <tr v-for="(day, i) in kintaiDatas"  v-bind:key="i">
-            <td>{{day.month}}/{{ day.day }}</td>
-            <td v-bind:style="day.styleObject">{{day.dayofweek}}</td>
-            <td>{{day.clockinDate}}</td>
-            <td>{{day.clockoutDate}}</td>
-            <td>{{day.restTime}}</td>
-            <td>{{day.comment}}</td>
-            <td>{{day.workTime}}</td>
+        <tr v-for="(day, i) in kintaiDatas" v-bind:key="i">
+          <td>{{ day.month }}/{{ day.day }}</td>
+          <td v-bind:style="day.styleObject">{{ day.dayofweek }}</td>
+          <td>{{ day.clockinDate }}</td>
+          <td>{{ day.clockoutDate }}</td>
+          <td>{{ day.restTime }}</td>
+          <td>{{ day.comment }}</td>
+          <td>{{ day.workTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,7 +34,7 @@
 <script>
 import { holidayList } from "../assets/holiday_list.json";
 import { db } from "../plugins/firebase";
-import { set2num } from "../util/util.js";
+import { set2fig } from "../util/util.js";
 
 export default {
   data() {
@@ -75,12 +75,11 @@ export default {
       // 年月日を取得
       // 祝日リストに日付が含まれるかどうか調べ、結果を返す
 
-      if (2017 < this.currentDate.YYYY && this.currentDate.YYYY < 2021)
-        return (
-          this.holidayList[this.currentDate.YYYY][this.currentDate.MM].indexOf(
-            dd
-          ) !== -1
-        );
+      if (2017 < this.currentDate.YYYY && this.currentDate.YYYY < 2021) {
+        let h = this.holidayList[this.currentDate.YYYY][this.currentDate.MM];
+        if (h == null) return false;
+        return h.indexOf(dd) !== -1;
+      }
       return false;
     },
     makeKintaiDatas: function() {
@@ -125,7 +124,7 @@ export default {
             var restTime = ""; //"60";
             var comment = "";
 
-            var day = this.set2num(i);
+            var day = this.set2fig(i);
             if (yearmonthTarget + "-" + day in records) {
               // console.log(yearmonthTarget + "-" + day); // eslint-disable-line no-console
               var record = records[yearmonthTarget + "-" + day];
@@ -147,7 +146,7 @@ export default {
                   var duration = this.$moment.duration(b.diff(a));
                   var minutes = duration.asMinutes();
                   var hour = parseInt(minutes / 60, 10);
-                  var minuteStr = this.set2num((minutes % 60).toString(10));
+                  var minuteStr = this.set2fig((minutes % 60).toString(10));
 
                   var hourStr = hour.toString(10);
                   restTime = "0";
@@ -215,7 +214,7 @@ export default {
       ).getDate();
       this.makeKintaiDatas();
     },
-    set2num
+    set2fig
   },
   mounted() {
     this.date = this.$moment();

@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="container">
-    <current-date/>
-    <kintai/>
-    <kintai-table/>
+    <current-date />
+    <kintai />
+    <kintai-table />
+    <!-- <Timer/> -->
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import CurrentDate from "./components/CurrentDate";
 import Kintai from "./components/Kintai";
 import KintaiTable from "./components/KintaiTable";
+// import Timer from './components/Timer'
 
 export default {
   name: "app",
@@ -17,6 +19,7 @@ export default {
     CurrentDate,
     Kintai,
     KintaiTable
+    // Timer
   },
   data() {
     return {};
