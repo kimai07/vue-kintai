@@ -1,4 +1,4 @@
 #!/bin/sh
 
-yarn add firebase-admin csv-parse
+npm install firebase-admin csv-parse
 node import.js
